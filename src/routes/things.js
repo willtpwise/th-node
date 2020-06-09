@@ -19,8 +19,16 @@ module.exports = new Router()
   .post('', async (req, res) => {
     const payload = req.body;
 
-    if (payload && payload.quantity < 10) {
+    if (!payload) {
       throw httperrors.BadRequest();
+    }
+
+    if (payload.quantity < 10) {
+      throw httperrors.BadRequest();
+    }
+
+    if (new RegExp(/:/).test(payload.name) && req.auth.name !== 'admin') {
+      throw httperrors.Forbidden();
     }
 
     const created = await Thing.create(payload);
