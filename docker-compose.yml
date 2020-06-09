@@ -41,6 +41,8 @@ services:
   postgresql:
     image: postgres:9.5
     command: postgres
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
       - ./config/database:/docker-entrypoint-initdb.d
     ports:
