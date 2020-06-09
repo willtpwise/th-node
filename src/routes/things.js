@@ -19,6 +19,10 @@ module.exports = new Router()
   .post('', async (req, res) => {
     const payload = req.body;
 
+    if (payload && payload.quantity < 10) {
+      throw httperrors.BadRequest();
+    }
+
     const created = await Thing.create(payload);
 
     res.json(created);
